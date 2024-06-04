@@ -9,10 +9,10 @@ function App() {
   const [searchText, setSearchText] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(false);
 
-
   function handleDarkModeClick() {
     setIsDarkMode((isDarkMode) => !isDarkMode);
   }
+
   function handleCategoryChange(event) {
     setSelectedCategory(event.target.value);
   }
@@ -33,13 +33,22 @@ function App() {
     }
     return item.category === selectedCategory && item.name.toLowerCase().includes(searchText.toLowerCase());
   });
+
   return (
-    <div className={"App " + (isDarkMode ? "light" : "dark")}>
-      <Header isDarkMode={isDarkMode} onDarkModeClick={handleDarkModeClick} 
-              onCategoryChange={handleCategoryChange}
-              onSearchChange={handleSearchChange}
-    />
-      <ShoppingList items={itemsToDisplay}  onItemFormSubmit={handleItemFormSubmit}/>
+    <div className={`App ${isDarkMode ? "dark" : "light"}`}>
+      <Header 
+        isDarkMode={isDarkMode} 
+        onDarkModeClick={handleDarkModeClick} 
+        onCategoryChange={handleCategoryChange}
+        onSearchChange={handleSearchChange}
+        searchText={searchText}  // pass the searchText to Header
+      />
+      <ShoppingList 
+        items={itemsToDisplay} 
+        onItemFormSubmit={handleItemFormSubmit}
+        selectedCategory={selectedCategory}
+        onCategoryChange={handleCategoryChange}
+      />
     </div>
   );
 }
